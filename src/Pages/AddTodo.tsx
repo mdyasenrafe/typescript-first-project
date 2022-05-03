@@ -32,22 +32,20 @@ const AddTodo = ({
   const onSubmit: SubmitHandler<IFormInputs> = (data) => {
     data["id"] = Math.floor(10 + Math.random() * 90);
     setTodo([...Todo, data]);
+
     const getTodo = JSON.parse(localStorage.getItem("todos") || "[]");
-    let uniqueArray = [];
-    uniqueArray.push(getTodo);
-    //  push get todo value in unique array
-    for (const item of uniqueArray) {
-      uniqueArray.push(item);
+    let uniqueArray: Todo[] = [data];
+
+    if (getTodo.length !== 0) {
+      for (const item of getTodo) {
+        uniqueArray.push(item);
+      }
+      localStorage.setItem("todos", JSON.stringify(uniqueArray));
+    } else {
+      localStorage.setItem("todos", JSON.stringify([...Todo, data]));
     }
-    uniqueArray.push(data);
-    console.log(uniqueArray);
-    // if (getTodo.length !== 0) {
-    //   getTodo.push(data)
-    //   localStorage.setItem("todos", JSON.stringify([getTodo]));
-    // } else {
-    // localStorage.setItem("todos", JSON.stringify([...Todo, data]));
-    // }
-    // naigate("/my_todo");
+    alert("already added");
+    naigate("/my_todo");
   };
   return (
     <section className="mx-auto container px-12">
@@ -84,7 +82,7 @@ const AddTodo = ({
         </div>
         <div className="mb-4 mx-auto text-center">
           <input
-            className="w-3/4 bg-[#233A95] border border-gray-200 rounded py-4 px-4 mb-3 leading-tight focus:outline-none text-white"
+            className="w-3/4 bg-[#233A95] border border-gray-200 rounded py-4 px-4 mb-3 leading-tight focus:outline-none text-white cursor-pointor"
             type="submit"
           />
         </div>
