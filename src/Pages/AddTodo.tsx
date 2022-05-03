@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Todo } from "../App";
+import { Toast } from "../Components/Toast";
 
 type Props = {
   setTodos: (value: Todo) => void;
@@ -44,7 +45,10 @@ const AddTodo = ({
     } else {
       localStorage.setItem("todos", JSON.stringify([...Todo, data]));
     }
-    alert("already added");
+    Toast.fire({
+      icon: "success",
+      title: "Added successfully",
+    });
     naigate("/my_todo");
   };
   return (
